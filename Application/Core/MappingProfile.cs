@@ -5,7 +5,7 @@ namespace Application.Core
 {
     public class MappingProfile : Profile
     {
-        protected MappingProfile()
+        public MappingProfile()
         {
             CreateMap<Activity,Activity>();
         }

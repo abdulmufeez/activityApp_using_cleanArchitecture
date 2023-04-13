@@ -1,5 +1,7 @@
 using Application.Activities;
 using Application.Core;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -31,6 +33,9 @@ namespace Api.Extensions
             // adding mediator as a service and telling it to find where the handlers are,just like in typeof()
             services.AddMediatR(typeof(List.Handler));
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            // adding fluent validation but with auto validation
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<Create>();
 
             return services;
         }
