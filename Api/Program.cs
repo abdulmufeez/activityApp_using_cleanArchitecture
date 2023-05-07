@@ -4,6 +4,7 @@ using Api.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ApplicationServices(builder.Configuration);
+builder.Services.IdentityServices(builder.Configuration);
 
 var app = builder.Build();
 

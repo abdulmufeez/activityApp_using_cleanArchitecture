@@ -1,8 +1,10 @@
 using Application.Activities;
 using Application.Core;
+using Domain;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -35,7 +37,7 @@ namespace Api.Extensions
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             // adding fluent validation but with auto validation
             services.AddFluentValidationAutoValidation();
-            services.AddValidatorsFromAssemblyContaining<Create>();
+            services.AddValidatorsFromAssemblyContaining<Create>();            
 
             return services;
         }
@@ -47,8 +49,9 @@ namespace Api.Extensions
             try
             {
                 var context = services.GetRequiredService<DataContext>();
+                var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 await context.Database.MigrateAsync();
-                await SeedData.SeedActivitiesData(context);
+                await SeedData.SeedActivitiesData(context, userManager);
             }
             catch (Exception ex)
             {
